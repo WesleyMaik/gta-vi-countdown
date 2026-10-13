@@ -1,9 +1,41 @@
+import { useState, useCallback, useEffect } from 'react';
 import { useCountdown } from './hooks/useCountdown';
 import { CountdownDisplay } from './components/CountdownDisplay';
+import { StaggeredMenu } from './components/StaggeredMenu';
+import { ThemeSelector } from './components/ThemeSelector';
+import { SITE_THEMES, type SiteTheme } from './types/theme';
 import './App.css';
 
 export function App() {
   const { timeRemaining, releaseDate, isLoading } = useCountdown();
+
+  const [activeTheme, setActiveTheme] = useState<SiteTheme>(() => {
+    try {
+      const saved = localStorage.getItem('gta-vi-theme');
+      if (saved) {
+        const found = SITE_THEMES.find((t) => t.id === saved);
+        if (found) return found;
+      }
+    } catch {
+      // LocalStorage access fallback
+    }
+    return SITE_THEMES[0];
+  });
+
+  const handleSelectTheme = useCallback((theme: SiteTheme) => {
+    setActiveTheme(theme);
+    try {
+      localStorage.setItem('gta-vi-theme', theme.id);
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--color-ground', activeTheme.colors.ground);
+    document.documentElement.style.setProperty('--color-accent-sun', activeTheme.colors.accentSun);
+    document.documentElement.style.setProperty('--color-accent-vice', activeTheme.colors.accentVice);
+  }, [activeTheme]);
 
   const formattedTargetDate = (() => {
     try {
@@ -19,17 +51,47 @@ export function App() {
     }
   })();
 
+  const themeCustomProperties = {
+    '--color-ground': activeTheme.colors.ground,
+    '--color-accent-sun': activeTheme.colors.accentSun,
+    '--color-accent-vice': activeTheme.colors.accentVice,
+    '--color-ink': activeTheme.colors.ink,
+    '--color-muted': activeTheme.colors.muted,
+  } as React.CSSProperties;
+
   return (
-    <main className="countdown-stage">
+    <main className="countdown-stage" style={themeCustomProperties}>
+      <StaggeredMenu
+        title="Theme"
+        accentColor={activeTheme.colors.accentSun}
+        menuButtonColor="#ffffff"
+        openMenuButtonColor={activeTheme.colors.accentSun}
+        colors={[
+          activeTheme.colors.accentVice,
+          activeTheme.colors.accentSun,
+          activeTheme.colors.ground,
+        ]}
+      >
+        <ThemeSelector
+          themes={SITE_THEMES}
+          activeThemeId={activeTheme.id}
+          onSelectTheme={handleSelectTheme}
+        />
+      </StaggeredMenu>
+
       <div className="backdrop-layer">
         <img
-          src="./assets/miami-sunset.jpg"
-          alt="Vice City Miami sunset atmosphere"
+          key={activeTheme.image}
+          src={activeTheme.image}
+          alt={activeTheme.name}
           className="backdrop-image"
           width={1920}
-          height={1080}
+          height={1200}
         />
-        <div className="backdrop-scrim" />
+        <div
+          className="backdrop-scrim"
+          style={{ backgroundColor: activeTheme.colors.scrim }}
+        />
       </div>
 
       <div className="countdown-container">
