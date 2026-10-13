@@ -7,6 +7,7 @@ export interface StaggeredMenuProps {
   position?: 'left' | 'right';
   colors?: string[];
   title?: string;
+  headerRight?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
   menuButtonColor?: string;
@@ -23,6 +24,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   position = 'right',
   colors = ['#f4327f', '#ffd000', '#100219'],
   title = 'Theme',
+  headerRight,
   children,
   className,
   menuButtonColor = '#ffffff',
@@ -420,8 +422,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           aria-hidden={!open}
         >
           <div className="sm-panel-inner flex-1 flex flex-col gap-4">
-            <div className="sm-panel-header pb-2">
+            <div className="sm-panel-header pb-2 flex items-center justify-between">
               <h2 className="text-xl font-bold tracking-wide uppercase text-[#ffd000]">{title}</h2>
+              {headerRight}
             </div>
 
             <div className="sm-panel-content flex flex-col gap-3">

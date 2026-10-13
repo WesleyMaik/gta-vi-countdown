@@ -22,6 +22,47 @@ export function App() {
     return SITE_THEMES[0];
   });
 
+  const [autoCycle, setAutoCycle] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('gta-vi-auto-cycle');
+      return saved !== null ? saved === 'true' : true;
+    } catch {
+      return true;
+    }
+  });
+
+  const handleToggleAutoCycle = useCallback(() => {
+    setAutoCycle((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('gta-vi-auto-cycle', String(next));
+      } catch {
+        // Ignore storage errors
+      }
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!autoCycle) return;
+
+    const interval = setInterval(() => {
+      setActiveTheme((currentTheme) => {
+        const currentIndex = SITE_THEMES.findIndex((t) => t.id === currentTheme.id);
+        const nextIndex = (currentIndex + 1) % SITE_THEMES.length;
+        const nextTheme = SITE_THEMES[nextIndex];
+        try {
+          localStorage.setItem('gta-vi-theme', nextTheme.id);
+        } catch {
+          // Ignore storage errors
+        }
+        return nextTheme;
+      });
+    }, 45000);
+
+    return () => clearInterval(interval);
+  }, [autoCycle]);
+
   const handleSelectTheme = useCallback((theme: SiteTheme) => {
     setActiveTheme(theme);
     try {
@@ -59,10 +100,36 @@ export function App() {
     '--color-muted': activeTheme.colors.muted,
   } as React.CSSProperties;
 
+  const autoCycleSwitch = (
+    <div className="flex items-center gap-2" data-ui="auto-cycle-switch">
+      <span className="text-sm font-semibold text-white/80 select-none">
+        Auto
+      </span>
+      <button
+        type="button"
+        role="switch"
+        aria-label="Automatic theme rotation"
+        aria-checked={autoCycle}
+        onClick={handleToggleAutoCycle}
+        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-[background-color] duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffd000] ${
+          autoCycle ? 'bg-[#ffd000]' : 'bg-white/20'
+        }`}
+      >
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none inline-block h-5 w-5 transform rounded-full transition-[transform,background-color] duration-200 ease-in-out ${
+            autoCycle ? 'translate-x-5 bg-black' : 'translate-x-0 bg-white'
+          }`}
+        />
+      </button>
+    </div>
+  );
+
   return (
     <main className="countdown-stage" style={themeCustomProperties}>
       <StaggeredMenu
         title="Theme"
+        headerRight={autoCycleSwitch}
         accentColor={activeTheme.colors.accentSun}
         menuButtonColor="#ffffff"
         openMenuButtonColor={activeTheme.colors.accentSun}
