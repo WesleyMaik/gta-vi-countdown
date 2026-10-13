@@ -6,7 +6,7 @@
 
 ## Overview
 
-**GTA VI Countdown** is a single-section landing page that tracks the remaining time until the launch of Grand Theft Auto VI. Built with a vibrant Florida sunset and Vice City color palette (neon pinks, sunburst yellows, and deep purple dusk), the interface combines monumental typography, official GTA VI art, and interactive theme customization.
+**GTA VI Countdown** is a single-section landing page that tracks the remaining time until the launch of Grand Theft Auto VI. Built with a vibrant Florida sunset and Vice City color palette (neon pinks, sunburst yellows, and deep purple dusk), the interface combines monumental typography, Vice City artwork, and interactive theme customization.
 
 - **Live Demo**: [https://wesleymaik.github.io/gta-vi-countdown/](https://wesleymaik.github.io/gta-vi-countdown/)
 

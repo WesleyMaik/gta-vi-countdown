@@ -189,7 +189,7 @@ export function App() {
 
         <footer className="countdown-footer">
           <p className="countdown-target-note">
-            Official target: {formattedTargetDate} (Worldwide)
+            Expected release: {formattedTargetDate} (Worldwide)
           </p>
           <p className="countdown-disclaimer">
             Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.
