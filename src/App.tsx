@@ -34,6 +34,13 @@ export function App() {
 
       <div className="countdown-container">
         <header className="countdown-header">
+          <img
+            src="./assets/gta-vi-logo.png"
+            alt="Grand Theft Auto VI logo"
+            className="brand-logo"
+            width={140}
+            height={60}
+          />
           <h1 className="countdown-title">Grand Theft Auto VI Launches In</h1>
         </header>
 
@@ -48,6 +55,9 @@ export function App() {
         <footer className="countdown-footer">
           <p className="countdown-target-note">
             Official target: {formattedTargetDate} (Worldwide)
+          </p>
+          <p className="countdown-disclaimer">
+            Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.
           </p>
         </footer>
       </div>
