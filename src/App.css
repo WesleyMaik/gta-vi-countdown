@@ -1,0 +1,204 @@
+.countdown-stage {
+  position: relative;
+  min-height: 100svh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--color-ground);
+}
+
+.backdrop-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.backdrop-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+}
+
+.backdrop-scrim {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(16, 2, 25, 0.78);
+}
+
+.countdown-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1280px;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.countdown-header {
+  margin-bottom: clamp(1.75rem, 4vw, 3.25rem);
+  animation: enterRise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.countdown-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4.2vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  max-width: 28ch;
+  margin: 0 auto;
+}
+
+.countdown-display {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 1.8vw, 2.25rem);
+  flex-wrap: wrap;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: clamp(72px, 14vw, 160px);
+  animation: enterRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.countdown-unit:nth-child(1) { animation-delay: 0.08s; }
+.countdown-unit:nth-child(3) { animation-delay: 0.16s; }
+.countdown-unit:nth-child(5) { animation-delay: 0.24s; }
+.countdown-unit:nth-child(7) { animation-delay: 0.32s; }
+
+.unit-number {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 11vw, 9.5rem);
+  line-height: 0.88;
+  color: var(--color-accent-sun);
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+
+.unit-label {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-top: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.unit-separator {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  line-height: 0.88;
+  color: var(--color-accent-vice);
+  margin-bottom: 2rem;
+  user-select: none;
+  animation: enterRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.unit-separator:nth-child(2) { animation-delay: 0.12s; }
+.unit-separator:nth-child(4) { animation-delay: 0.20s; }
+.unit-separator:nth-child(6) { animation-delay: 0.28s; }
+
+.countdown-footer {
+  margin-top: clamp(2rem, 5vw, 4rem);
+  animation: enterRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.36s;
+}
+
+.countdown-target-note {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.countdown-loading {
+  padding: 3rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-accent-sun);
+}
+
+.countdown-released {
+  animation: enterRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.released-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  color: var(--color-accent-sun);
+  display: block;
+}
+
+.released-subtext {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  color: var(--color-ink);
+  margin-top: 1rem;
+}
+
+@keyframes enterRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .countdown-container {
+    padding: 2rem 1rem;
+  }
+
+  .unit-separator {
+    display: none;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .countdown-unit {
+    min-width: unset;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-header,
+  .countdown-unit,
+  .unit-separator,
+  .countdown-footer,
+  .countdown-released {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
