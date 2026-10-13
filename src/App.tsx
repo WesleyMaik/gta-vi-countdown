@@ -58,7 +58,7 @@ export function App() {
         }
         return nextTheme;
       });
-    }, 45000);
+    }, 30000);
 
     return () => clearInterval(interval);
   }, [autoCycle]);
@@ -146,15 +146,21 @@ export function App() {
         />
       </StaggeredMenu>
 
-      <div className="backdrop-layer">
-        <img
-          key={activeTheme.image}
-          src={activeTheme.image}
-          alt={activeTheme.name}
-          className="backdrop-image"
-          width={1920}
-          height={1200}
-        />
+      <div className="backdrop-layer" aria-hidden="true">
+        {SITE_THEMES.map((theme) => {
+          const isActive = theme.id === activeTheme.id;
+          return (
+            <img
+              key={theme.id}
+              src={theme.image}
+              alt=""
+              className={`backdrop-image ${isActive ? 'backdrop-image-active' : 'backdrop-image-hidden'}`}
+              width={1920}
+              height={1200}
+              loading="eager"
+            />
+          );
+        })}
         <div
           className="backdrop-scrim"
           style={{ backgroundColor: activeTheme.colors.scrim }}
