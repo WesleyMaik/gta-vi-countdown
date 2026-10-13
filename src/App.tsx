@@ -150,15 +150,22 @@ export function App() {
         {SITE_THEMES.map((theme) => {
           const isActive = theme.id === activeTheme.id;
           return (
-            <img
+            <picture
               key={theme.id}
-              src={theme.image}
-              alt=""
               className={`backdrop-image ${isActive ? 'backdrop-image-active' : 'backdrop-image-hidden'}`}
-              width={1920}
-              height={1200}
-              loading="eager"
-            />
+            >
+              <source media="(max-width: 768px)" srcSet={theme.mobileImage} />
+              <img
+                src={theme.image}
+                srcSet={`${theme.mobileImage} 1080w, ${theme.image} 1920w`}
+                sizes="(max-width: 768px) 100vw, 100vw"
+                alt=""
+                width={1920}
+                height={1200}
+                loading="eager"
+                className="backdrop-image-content"
+              />
+            </picture>
           );
         })}
         <div
@@ -189,7 +196,7 @@ export function App() {
 
         <footer className="countdown-footer">
           <p className="countdown-target-note">
-            Expected release: {formattedTargetDate} (Worldwide)
+            Official target: {formattedTargetDate} (Worldwide)
           </p>
           <p className="countdown-disclaimer">
             Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.

@@ -23,6 +23,7 @@
   3. *Neon Supercar* (Midnight Vice City strip)
   4. *Leonida Keys* (Tropical waters and highway)
   5. *Lucia Caminos* (Lucia in Vice City)
+- **Responsive Wallpapers (`<picture>` & `srcset`)**: Automatically serves 1080x1920 portrait wallpapers on mobile devices and 1920x1200 landscape wallpapers on desktop.
 - **Cinematic Transitions**: Seamless hardware-accelerated crossfade between wallpapers and smooth color transitions across all typography and scrim overlays.
 - **Auto-Rotation Mode**: Optional autoload switch in the theme menu that smoothly cycles themes every 30 seconds (enabled by default, persisted in `localStorage`).
 - **Responsive Typography**: Built with Anton and Syne, scaling from ultra-wide displays down to mobile viewports (390px).
