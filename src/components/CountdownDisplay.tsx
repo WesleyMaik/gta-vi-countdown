@@ -1,6 +1,7 @@
 import React from 'react';
 import type { TimeRemaining } from '../types/countdown';
 import { CountdownUnit } from './CountdownUnit';
+import { ReleaseConfetti } from './ReleaseConfetti';
 
 interface CountdownDisplayProps {
   timeRemaining: TimeRemaining;
@@ -11,10 +12,13 @@ export const CountdownDisplay: React.FC<CountdownDisplayProps> = ({
 }) => {
   if (timeRemaining.isReleased) {
     return (
-      <div className="countdown-released">
-        <span className="released-headline">Grand Theft Auto VI is Out Now!</span>
-        <p className="released-subtext">Welcome to Vice City.</p>
-      </div>
+      <>
+        <ReleaseConfetti />
+        <div className="countdown-released" role="status">
+          <p className="released-headline">Out now</p>
+          <p className="released-subtext">Welcome to Vice City.</p>
+        </div>
+      </>
     );
   }
 

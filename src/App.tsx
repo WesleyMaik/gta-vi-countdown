@@ -8,6 +8,7 @@ import './App.css';
 
 export function App() {
   const { timeRemaining, releaseDate, isLoading } = useCountdown();
+  const isReleased = !isLoading && timeRemaining.isReleased;
 
   const [activeTheme, setActiveTheme] = useState<SiteTheme>(() => {
     try {
@@ -183,7 +184,9 @@ export function App() {
             width={140}
             height={60}
           />
-          <h1 className="countdown-title">Grand Theft Auto VI Launches In</h1>
+          <h1 className="countdown-title">
+            {isReleased ? 'Grand Theft Auto VI' : 'Grand Theft Auto VI Launches In'}
+          </h1>
         </header>
 
         {isLoading ? (
@@ -196,7 +199,7 @@ export function App() {
 
         <footer className="countdown-footer">
           <p className="countdown-target-note">
-            Official target: {formattedTargetDate} (Worldwide)
+            {isReleased ? 'Released' : 'Official target'}: {formattedTargetDate} (Worldwide)
           </p>
           <p className="countdown-disclaimer">
             Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.
